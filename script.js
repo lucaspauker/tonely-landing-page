@@ -52,6 +52,21 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(mockup);
     });
     
+    // Add fade-in animation to about section elements
+    const aboutTextColumn = document.querySelector('.about-text-column');
+    const aboutVisualColumn = document.querySelector('.about-visual-column');
+    
+    if (aboutTextColumn) {
+        aboutTextColumn.classList.add('fade-in');
+        observer.observe(aboutTextColumn);
+    }
+    
+    if (aboutVisualColumn) {
+        aboutVisualColumn.style.animationDelay = '0.3s';
+        aboutVisualColumn.classList.add('fade-in');
+        observer.observe(aboutVisualColumn);
+    }
+    
     // Watch haptic rhythm animation
     const watchBody = document.querySelector('.watch-body');
     const watchContainer = document.querySelector('.watch-container');

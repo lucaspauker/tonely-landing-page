@@ -16,6 +16,7 @@ body {
     background: linear-gradient(135deg, #090712 0%, #14102B 100%);
     font-size: 16px;
     min-height: 100vh;
+    position: relative;
 }
 
 .container {
@@ -150,7 +151,7 @@ em {
 
 /* Section styles */
 section {
-    padding: 8rem 0;
+    padding: 5rem 0;
 }
 
 .about {
@@ -168,7 +169,7 @@ section {
 /* About Section */
 .about {
     color: white;
-    padding: 10rem 0 8rem;
+    padding: 15rem 0 5rem;
     position: relative;
 }
 
@@ -476,7 +477,7 @@ section {
 
 /* Screenshots Section */
 .screenshots {
-    padding: 8rem 0;
+    padding: 5rem 0;
     position: relative;
 }
 
@@ -617,6 +618,14 @@ section {
     font-weight: 500;
 }
 
+/* Tablet adjustments for steps */
+@media (max-width: 900px) {
+    .step-arrow {
+        font-size: 1.3rem;
+        margin: 0 0.8rem;
+    }
+}
+
 /* Mobile responsiveness for screenshots */
 @media (max-width: 1024px) {
     .device-showcase {
@@ -671,21 +680,30 @@ section {
 }
 
 .steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    display: flex;
+    align-items: stretch;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 .step {
+    flex: 1;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 2.5rem 1.5rem;
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.step {
+    cursor: pointer;
 }
 
 .step:hover {
@@ -711,6 +729,18 @@ section {
     line-height: 1.5;
 }
 
+/* Step arrow styling */
+.step-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: rgba(0, 232, 255, 0.6);
+    font-weight: bold;
+    margin: 0 1rem;
+    flex-shrink: 0;
+}
+
 .steps-subtext {
     text-align: center;
     font-style: italic;
@@ -723,7 +753,7 @@ section {
     position: relative;
     color: white;
     text-align: center;
-    padding: 8rem 0;
+    padding: 5rem 0;
 }
 
 .cta .section-title {
@@ -823,6 +853,30 @@ section {
     font-size: 0.9rem;
 }
 
+/* Musical Staff Background */
+.musical-background {
+    position: absolute;
+    bottom: -40%;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.staff-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Ensure hero section content is above background */
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
@@ -885,8 +939,13 @@ section {
     }
     
     .steps {
-        grid-template-columns: 1fr;
+        flex-direction: column;
         gap: 1.5rem;
+    }
+    
+    /* Hide arrows on mobile */
+    .step-arrow {
+        display: none;
     }
     
     .cta-features {
