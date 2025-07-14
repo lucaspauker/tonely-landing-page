@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tonely - Train your ear. Feel the music.</title>
+    <meta name="description" content="Experience musical pitch through touch with Tonely — where Apple Watch haptics meet music theory.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Tonely</h1>
+                <h2 class="hero-tagline">Train your ear. Feel the music.</h2>
+                <p class="hero-description">Experience musical pitch through touch — where Apple Watch haptics meet music theory.</p>
+                
+                <div class="hero-cta">
+                    <form class="email-form" id="emailForm">
+                        <input type="email" placeholder="your@email.com" class="email-input" required>
+                        <button type="submit" class="email-button">Get Updates</button>
+                    </form>
+                    <p class="cta-note">Join the list to follow Tonely's progress and beta launch.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text-column">
+                    <div class="section-intro">
+                        <h2 class="section-title">Music through touch</h2>
+                    </div>
+                    <div class="about-content">
+                        <p class="about-text primary">Tonely is an ongoing research project exploring how haptic feedback might help people develop pitch recognition. It's part experiment, part tool, and part invitation. We're building in public — join us if you're curious.</p>
+                        <p class="about-text secondary">What if you could <em>feel</em> a perfect fifth? What if your wrist could help train your ear? We're exploring these questions one pulse at a time.</p>
+                    </div>
+                </div>
+                
+                <div class="about-visual-column">
+                    <div class="watch-visual">
+                        <div class="watch-container">
+                            <div class="watch-body">
+                                <div class="watch-screen-visual">
+                                    <div class="haptic-pattern">
+                                        <div class="haptic-dot"></div>
+                                        <div class="haptic-dot"></div>
+                                        <div class="haptic-dot"></div>
+                                        <div class="haptic-dot"></div>
+                                        <div class="haptic-dot"></div>
+                                    </div>
+                                </div>
+                                <div class="watch-crown-visual"></div>
+                            </div>
+                            <div class="watch-band top"></div>
+                            <div class="watch-band bottom"></div>
+                            
+                            <!-- Haptic Arc SVGs -->
+                            <svg class="haptic-arc-small top-right" viewBox="0 0 50 50">
+                                <path d="M 25,5 A 20,20 0 0,1 45,25" stroke="#00E8FF" stroke-width="2" fill="none"/>
+                            </svg>
+                            <svg class="haptic-arc-small bottom-left" viewBox="0 0 50 50">
+                                <path d="M 25,45 A 20,20 0 0,1 5,25" stroke="#00E8FF" stroke-width="2" fill="none"/>
+                            </svg>
+                            <svg class="haptic-arc-large top-right" viewBox="0 0 70 70">
+                                <path d="M 35,7 A 28,28 0 0,1 63,35" stroke="#00E8FF" stroke-width="1.5" fill="none"/>
+                            </svg>
+                            <svg class="haptic-arc-large bottom-left" viewBox="0 0 70 70">
+                                <path d="M 35,63 A 28,28 0 0,1 7,35" stroke="#00E8FF" stroke-width="1.5" fill="none"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="screenshots">
+        <div class="container">
+            <h2 class="section-title">See Tonely in action</h2>
+            <div class="device-showcase">
+                <div class="phone-screenshots">
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <img src="phone-screen-1.png" alt="Tonely iPhone screenshot 1" class="screenshot-img">
+                            </div>
+                        </div>
+                        <p class="device-caption">Interval Training</p>
+                    </div>
+                    
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <img src="phone-screen-2.png" alt="Tonely iPhone screenshot 2" class="screenshot-img">
+                            </div>
+                        </div>
+                        <p class="device-caption">Progress Tracking</p>
+                    </div>
+                    
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <img src="phone-screen-3.png" alt="Tonely iPhone screenshot 3" class="screenshot-img">
+                            </div>
+                        </div>
+                        <p class="device-caption">Settings & Customization</p>
+                    </div>
+                </div>
+                
+                <div class="watch-screenshot">
+                    <div class="watch-mockup">
+                        <div class="watch-frame">
+                            <div class="watch-screen">
+                                <img src="watch-screen.png" alt="Tonely Apple Watch screenshot" class="screenshot-img">
+                            </div>
+                            <div class="watch-crown"></div>
+                        </div>
+                        <p class="device-caption">Haptic Feedback Control</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Three simple steps</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">🎧</div>
+                    <h3 class="step-title">Listen</h3>
+                    <p class="step-description">Hear musical intervals and notes</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🤚</div>
+                    <h3 class="step-title">Feel</h3>
+                    <p class="step-description">Experience corresponding haptic patterns on your wrist</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">🎯</div>
+                    <h3 class="step-title">Learn</h3>
+                    <p class="step-description">Build pitch recognition through touch and sound</p>
+                </div>
+            </div>
+            <p class="steps-subtext">No music theory required. Just curiosity.</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="section-title">Ready to feel the music?</h2>
+            <div class="cta-content">
+                <p class="cta-text">Join our public beta and help shape the future of musical learning. Tonely is currently available for Apple Watch users who want to explore pitch recognition in a completely new way.</p>
+                <div class="cta-features">
+                    <span class="feature">Early access</span>
+                    <span class="feature">Free to try</span>
+                    <span class="feature">Your feedback shapes the research</span>
+                </div>
+                <button class="cta-button" id="testflightBtn">Join TestFlight Beta</button>
+                <p class="cta-requirement">Requires Apple Watch Series 4 or later</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <nav class="footer-nav">
+                    <a href="#" class="footer-link">Research Updates</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                </nav>
+                <p class="footer-tagline">Building the future of musical learning, one pulse at a time.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

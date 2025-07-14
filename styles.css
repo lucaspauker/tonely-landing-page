@@ -1,0 +1,941 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.87);
+    background: linear-gradient(135deg, #090712 0%, #14102B 100%);
+    font-size: 16px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Typography */
+h1, h2, h3 {
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+em {
+    font-style: italic;
+    color: #ff6b6b;
+    font-weight: 500;
+}
+
+/* Hero Section */
+.hero {
+    padding: 8rem 0 6rem;
+    color: white;
+    text-align: center;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #00E8FF, #FF3BCE);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    padding-bottom: 0.2em;
+}
+
+.hero-tagline {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
+}
+
+.hero-description {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 3rem;
+    line-height: 1.6;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Hero CTA */
+.hero-cta {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.email-form {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.6rem;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.email-input {
+    flex: 1;
+    min-width: 0;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 50px;
+    background: transparent;
+    color: white;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.email-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.email-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.email-button {
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #8B5CF6, #FF3BCE);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    font-size: 1rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(255, 59, 206, 0.3);
+    flex-shrink: 0;
+}
+
+.email-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 232, 255, 0.4);
+    background: linear-gradient(135deg, #00E8FF, #FF3BCE);
+}
+
+.cta-note {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    line-height: 1.5;
+}
+
+
+/* Section styles */
+section {
+    padding: 8rem 0;
+}
+
+.about {
+    padding: 6rem 0 8rem;
+}
+
+.section-title {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 3rem;
+    color: rgba(255, 255, 255, 0.87);
+    text-shadow: 0 0 15px rgba(0, 232, 255, 0.2);
+}
+
+/* About Section */
+.about {
+    color: white;
+    padding: 10rem 0 8rem;
+    position: relative;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.about-text-column {
+    padding-right: 2rem;
+}
+
+.section-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.section-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.about .section-title {
+    color: rgba(255, 255, 255, 0.87);
+    text-align: center;
+    margin-bottom: 0;
+    font-size: clamp(1.8rem, 4vw, 2.2rem);
+    text-shadow: 0 0 20px rgba(0, 232, 255, 0.3);
+    white-space: nowrap;
+}
+
+.about-content {
+    text-align: left;
+}
+
+.about-text {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+.about-text.primary {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.about-text.secondary {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Watch Visual */
+.about-visual-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+}
+
+.watch-visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.watch-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.watch-body {
+    width: 120px;
+    height: 145px;
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    border-radius: 30px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border: 3px solid #444;
+}
+
+.watch-screen-visual {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    background: #000;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.watch-crown-visual {
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 30px;
+    background: #333;
+    border-radius: 8px;
+}
+
+.watch-band {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: #333;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+.watch-band.top {
+    top: -10px;
+}
+
+.watch-band.bottom {
+    bottom: -10px;
+}
+
+.haptic-pattern {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.haptic-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #333;
+    transition: all 0.3s ease;
+}
+
+
+/* Watch vibration animation */
+@keyframes watchVibrate {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    10% { transform: translateX(-2px) rotate(-1deg); }
+    30% { transform: translateX(2px) rotate(1deg); }
+    50% { transform: translateX(-1.5px) rotate(-0.5deg); }
+    70% { transform: translateX(1.5px) rotate(0.5deg); }
+    90% { transform: translateX(-1px) rotate(-0.3deg); }
+}
+
+.watch-body.vibrating {
+    animation: watchVibrate 0.5s ease-in-out;
+}
+
+/* Haptic vibration arcs */
+@keyframes hapticArcSmall {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+        filter: drop-shadow(0 0 0px #00E8FF);
+    }
+    40% {
+        opacity: 0.7;
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px #00E8FF);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 6px #00E8FF);
+    }
+}
+
+@keyframes hapticArcLarge {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+        filter: drop-shadow(0 0 0px #00E8FF);
+    }
+    30% {
+        opacity: 0.6;
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px #00E8FF);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.4);
+        filter: drop-shadow(0 0 8px #00E8FF);
+    }
+}
+
+/* SVG Haptic Arcs */
+.haptic-arc-small {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.haptic-arc-large {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.haptic-arc-small.top-right {
+    top: -15px;
+    right: -15px;
+}
+
+.haptic-arc-small.bottom-left {
+    bottom: -15px;
+    left: -15px;
+}
+
+.haptic-arc-large.top-right {
+    top: -20px;
+    right: -20px;
+}
+
+.haptic-arc-large.bottom-left {
+    bottom: -20px;
+    left: -20px;
+}
+
+/* Animation timing - small arcs first, then large */
+.watch-container.vibrating .haptic-arc-small.top-right {
+    animation: hapticArcSmall 0.4s ease-out;
+}
+
+.watch-container.vibrating .haptic-arc-small.bottom-left {
+    animation: hapticArcSmall 0.4s ease-out 0.1s;
+}
+
+.watch-container.vibrating .haptic-arc-large.top-right {
+    animation: hapticArcLarge 0.6s ease-out 0.15s;
+}
+
+.watch-container.vibrating .haptic-arc-large.bottom-left {
+    animation: hapticArcLarge 0.6s ease-out 0.25s;
+}
+
+/* Haptic pulse animation */
+@keyframes hapticPulse {
+    0% {
+        background: #333;
+        box-shadow: none;
+        transform: scale(1);
+    }
+    50% {
+        background: #00E8FF;
+        box-shadow: 0 0 15px rgba(0, 232, 255, 0.8);
+        transform: scale(1.3);
+    }
+    100% {
+        background: #333;
+        box-shadow: none;
+        transform: scale(1);
+    }
+}
+
+.haptic-dot.pulsing {
+    animation: hapticPulse 0.5s ease-in-out;
+}
+
+.quote-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    text-align: center;
+}
+
+.quote-bubble::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(255, 255, 255, 0.05);
+}
+
+.quote-bubble p {
+    margin: 0;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.87);
+    font-size: 0.9rem;
+}
+
+/* Screenshots Section */
+.screenshots {
+    padding: 8rem 0;
+    position: relative;
+}
+
+.device-showcase {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.phone-screenshots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.phone-mockup {
+    text-align: center;
+}
+
+.phone-frame {
+    position: relative;
+    width: 180px;
+    height: 360px;
+    margin: 0 auto 1rem;
+    background: #1a1a1a;
+    border-radius: 28px;
+    padding: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 6px;
+    background: #333;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.screenshot-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+}
+
+.screenshot-img::after {
+    content: '📱 Screen ' attr(data-screen);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Watch Mockup */
+.watch-screenshot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.watch-mockup {
+    text-align: center;
+}
+
+.watch-frame {
+    position: relative;
+    width: 200px;
+    height: 240px;
+    margin: 0 auto 1.5rem;
+    background: #1a1a1a;
+    border-radius: 45px;
+    padding: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.watch-crown {
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 40px;
+    background: #333;
+    border-radius: 6px;
+}
+
+.watch-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 33px;
+    overflow: hidden;
+    position: relative;
+}
+
+.watch-screen .screenshot-img {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+    font-size: 0.9rem;
+}
+
+.watch-screen .screenshot-img::after {
+    content: '⌚ Haptic UI';
+    font-size: 0.8rem;
+}
+
+.device-caption {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 500;
+}
+
+/* Mobile responsiveness for screenshots */
+@media (max-width: 1024px) {
+    .device-showcase {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+    
+    .phone-screenshots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .phone-frame {
+        width: 140px;
+        height: 280px;
+    }
+    
+    .watch-frame {
+        width: 160px;
+        height: 190px;
+    }
+}
+
+@media (max-width: 768px) {
+    .phone-screenshots {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        max-width: 200px;
+        margin: 0 auto;
+    }
+    
+    .phone-frame {
+        width: 160px;
+        height: 320px;
+    }
+    
+    .watch-frame {
+        width: 180px;
+        height: 210px;
+    }
+    
+    .screenshots {
+        padding: 6rem 0;
+    }
+    
+}
+
+/* How It Works Section */
+.how-it-works {
+    position: relative;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.step {
+    text-align: center;
+    padding: 2rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 232, 255, 0.2);
+    border-color: rgba(0, 232, 255, 0.3);
+}
+
+.step-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.step-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.step-description {
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+}
+
+.steps-subtext {
+    text-align: center;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+}
+
+/* CTA Section */
+.cta {
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 8rem 0;
+}
+
+.cta .section-title {
+    color: rgba(255, 255, 255, 0.87);
+    text-shadow: 0 0 20px rgba(255, 59, 206, 0.4);
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-text {
+    font-size: clamp(1.1rem, 2.5vw, 1.2rem);
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.cta-features {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.feature {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-button {
+    background: linear-gradient(135deg, #8B5CF6, #FF3BCE);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    margin-bottom: 1rem;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(255, 59, 206, 0.3);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 232, 255, 0.4);
+    background: linear-gradient(135deg, #00E8FF, #FF3BCE);
+}
+
+.cta-requirement {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+/* Footer */
+.footer {
+    color: white;
+    padding: 6rem 0 3rem;
+    position: relative;
+}
+
+.footer-content {
+    text-align: center;
+}
+
+.footer-nav {
+    margin-bottom: 2rem;
+}
+
+.footer-link {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: #00E8FF;
+    text-shadow: 0 0 10px rgba(0, 232, 255, 0.5);
+}
+
+.footer-tagline {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    section {
+        padding: 3rem 0;
+    }
+    
+    .hero {
+        padding: 6rem 0 4rem;
+    }
+    
+    .email-form {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+    
+    .email-input {
+        text-align: center;
+    }
+    
+    .email-button {
+        padding: 1rem;
+    }
+    
+    .about {
+        padding: 8rem 0 6rem;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+    }
+    
+    .about-text-column {
+        padding-right: 0;
+    }
+    
+    .about-content {
+        text-align: center;
+    }
+    
+    .watch-container {
+        margin-bottom: 1.5rem;
+    }
+    
+    .watch-body {
+        width: 100px;
+        height: 120px;
+    }
+    
+    .watch-band {
+        width: 70px;
+        height: 18px;
+    }
+    
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .cta-features {
+        gap: 0.5rem;
+    }
+    
+    .feature {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .footer-link {
+        margin: 0;
+    }
+    
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    
+    .step {
+        transition: none;
+    }
+    
+    .cta-button {
+        transition: none;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+.cta-button:focus,
+.footer-link:focus {
+    outline: 2px solid #ff6b6b;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .hero {
+        background: #000;
+    }
+    
+    .about-text.secondary {
+        color: #333;
+    }
+}
