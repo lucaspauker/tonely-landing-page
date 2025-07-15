@@ -67,6 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(aboutVisualColumn);
     }
     
+    // Add fade-in animation to footer bar
+    const footer = document.querySelector('.footer');
+    if (footer) {
+        footer.classList.add('fade-in');
+        observer.observe(footer);
+    }
+    
     // Watch haptic rhythm animation
     const watchBody = document.querySelector('.watch-body');
     const watchContainer = document.querySelector('.watch-container');
@@ -226,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Email form submission
     const emailForm = document.getElementById('emailForm');
     if (emailForm) {
-        emailForm.addEventListener('submit', function(e) {
+        emailForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const emailInput = this.querySelector('.email-input');
             const email = emailInput.value;
@@ -237,21 +244,66 @@ document.addEventListener('DOMContentLoaded', function() {
             button.textContent = 'Joining...';
             button.disabled = true;
             
-            // Simulate API call (replace with actual implementation)
-            setTimeout(() => {
-                button.textContent = 'Joined! ✓';
-                button.style.background = '#B0FF92';
-                button.style.boxShadow = '0 4px 15px rgba(176, 255, 146, 0.4)';
-                emailInput.value = '';
-                trackEvent('email_signup', { email: email });
+            try {
+                // Check if we're running on a server or locally
+                const isLocalFile = window.location.protocol === 'file:';
                 
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.background = '';
-                    button.style.boxShadow = '';
-                    button.disabled = false;
-                }, 2000);
-            }, 1000);
+                if (isLocalFile) {
+                    // Simulate success for local development
+                    console.log('Local development mode - email would be saved:', email);
+                    throw new Error('Please run `npm start` to enable email signup');
+                }
+                
+                // Submit to backend
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: email })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Success feedback
+                    button.textContent = 'Joined! ✓';
+                    button.style.background = '#4CAF50';
+                    button.style.boxShadow = '0 4px 15px rgba(76, 175, 80, 0.4)';
+                    emailInput.value = '';
+                    trackEvent('email_signup', { email: email, status: 'success' });
+                } else {
+                    // Error feedback
+                    button.textContent = result.message || 'Error occurred';
+                    button.style.background = '#ff6b6b';
+                    button.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
+                    trackEvent('email_signup', { email: email, status: 'error', error: result.message });
+                }
+                
+            } catch (error) {
+                console.error('Signup error:', error);
+                const isLocalFile = window.location.protocol === 'file:';
+                
+                if (isLocalFile) {
+                    button.textContent = 'Run server to signup';
+                    button.style.background = '#FF3BCE';
+                    button.style.boxShadow = '0 4px 15px rgba(255, 59, 206, 0.4)';
+                } else {
+                    button.textContent = 'Network error';
+                    button.style.background = '#ff6b6b';
+                    button.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
+                }
+                
+                trackEvent('email_signup', { email: email, status: 'error', error: isLocalFile ? 'local_file' : 'network_error' });
+            }
+            
+            // Reset button after 3 seconds
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+                button.style.boxShadow = '';
+                button.disabled = false;
+            }, 3000);
         });
     }
     
