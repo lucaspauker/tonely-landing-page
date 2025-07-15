@@ -1,23 +1,21 @@
-// Smooth scrolling for internal links
-document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scroll behavior to any internal links
-    const links = document.querySelectorAll('a[href^="#"]');
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
+// Disable scroll position restoration
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
 
-    // Intersection Observer for fade-in animations (disabled on mobile)
+// Force scroll to top on page load
+window.addEventListener('beforeunload', function() {
+    window.scrollTo(0, 0);
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Force scroll to top
+    window.scrollTo(0, 0);
+
+    // Detect mobile
     const isMobile = window.innerWidth <= 768;
     
+    // Intersection Observer for fade-in animations (only on desktop)
     if (!isMobile) {
         const observerOptions = {
             threshold: 0.1,
@@ -38,10 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
             section.classList.add('fade-in');
             observer.observe(section);
         });
-    }
 
-    // Add stagger animation to steps and device mockups (only on desktop)
-    if (!isMobile) {
+        // Add stagger animation to steps
         const steps = document.querySelectorAll('.step');
         steps.forEach((step, index) => {
             step.style.animationDelay = `${index * 0.2}s`;
@@ -58,8 +54,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Add fade-in animation to about section elements
+        const aboutSection = document.querySelector('.about');
+        const aboutTitle = document.querySelector('.about .section-title');
         const aboutTextColumn = document.querySelector('.about-text-column');
         const aboutVisualColumn = document.querySelector('.about-visual-column');
+        
+        if (aboutSection) {
+            aboutSection.classList.add('fade-in');
+            observer.observe(aboutSection);
+        }
+        
+        if (aboutTitle) {
+            aboutTitle.classList.add('fade-in');
+            observer.observe(aboutTitle);
+        }
         
         if (aboutTextColumn) {
             aboutTextColumn.classList.add('fade-in');
@@ -72,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             observer.observe(aboutVisualColumn);
         }
         
-        // Add fade-in animation to footer bar
+        // Add fade-in animation to footer
         const footer = document.querySelector('.footer');
         if (footer) {
             footer.classList.add('fade-in');
@@ -80,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Watch haptic rhythm animation
+    // Watch haptic rhythm animation (works on all devices)
     const watchBody = document.querySelector('.watch-body');
     const watchContainer = document.querySelector('.watch-container');
     const watchVisual = document.querySelector('.watch-visual');
@@ -96,17 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
         void watchBody.offsetWidth; // Force reflow
         watchBody.classList.add('vibrating');
         
-        // Add haptic arc effects to container (primary arcs)
+        // Add haptic arc effects to container
         watchContainer.classList.remove('vibrating');
         void watchContainer.offsetWidth; // Force reflow
         watchContainer.classList.add('vibrating');
         
-        // Add haptic arc effects to visual (echo arcs)
+        // Add haptic arc effects to visual
         watchVisual.classList.remove('vibrating');
         void watchVisual.offsetWidth; // Force reflow
         watchVisual.classList.add('vibrating');
         
-        // Animate haptic dots in sequence from left to right
+        // Animate haptic dots in sequence
         if (hapticDots.length > 0) {
             const currentDot = hapticDots[dotIndex];
             if (currentDot) {
@@ -120,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 500);
             }
             
-            // Move to next dot in sequence (left to right, then wrap)
+            // Move to next dot in sequence
             dotIndex = (dotIndex + 1) % hapticDots.length;
         }
         
@@ -141,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Then continue with rhythm
         hapticInterval = setInterval(() => {
             triggerHapticFeedback();
-        }, 2800); // Consistent 2.8s rhythm for better visual
+        }, 2800);
     }
     
     function stopHapticRhythm() {
@@ -168,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Add scroll listener for haptic feedback
+    // Add scroll listener for haptic feedback (works on all devices unless reduced motion)
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         window.addEventListener('scroll', handleScroll);
         
@@ -180,8 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const testflightBtn = document.getElementById('testflightBtn');
     if (testflightBtn) {
         testflightBtn.addEventListener('click', function() {
-            // Add a placeholder URL - replace with actual TestFlight link
-            const testflightUrl = 'https://testflight.apple.com/join/your-app-id';
+            const testflightUrl = 'https://testflight.apple.com/join/b38c4w2Q';
             
             // Add click animation
             this.style.transform = 'scale(0.95)';
@@ -189,11 +196,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 150);
 
-            // For now, just show an alert (replace with actual TestFlight link)
-            alert('TestFlight link will be added here when ready!');
-            
-            // Uncomment when you have the actual TestFlight link:
-            // window.open(testflightUrl, '_blank');
+            // Open TestFlight link
+            window.open(testflightUrl, '_blank');
         });
 
         // Add hover effect enhancement
@@ -207,7 +211,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.transform = '';
         });
     }
-
 
     // Add pulse effect to emoji icons
     const stepIcons = document.querySelectorAll('.step-icon');
@@ -224,9 +227,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Simple analytics tracking (placeholder)
+    // Simple analytics tracking
     function trackEvent(eventName, properties = {}) {
-        // Replace with your analytics implementation
         console.log('Analytics event:', eventName, properties);
     }
 
@@ -244,23 +246,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const emailInput = this.querySelector('.email-input');
             const email = emailInput.value;
             
-            // Add visual feedback
             const button = this.querySelector('.email-button');
             const originalText = button.textContent;
             button.textContent = 'Joining...';
             button.disabled = true;
             
             try {
-                // Check if we're running on a server or locally
                 const isLocalFile = window.location.protocol === 'file:';
                 
                 if (isLocalFile) {
-                    // Simulate success for local development
                     console.log('Local development mode - email would be saved:', email);
                     throw new Error('Please run `npm start` to enable email signup');
                 }
                 
-                // Submit to backend
                 const response = await fetch('/api/signup', {
                     method: 'POST',
                     headers: {
@@ -272,14 +270,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const result = await response.json();
                 
                 if (result.success) {
-                    // Success feedback
                     button.textContent = 'Joined! ✓';
                     button.style.background = '#4CAF50';
                     button.style.boxShadow = '0 4px 15px rgba(76, 175, 80, 0.4)';
                     emailInput.value = '';
                     trackEvent('email_signup', { email: email, status: 'success' });
                 } else {
-                    // Error feedback
                     button.textContent = result.message || 'Error occurred';
                     button.style.background = '#ff6b6b';
                     button.style.boxShadow = '0 4px 15px rgba(255, 107, 107, 0.4)';
@@ -323,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Track scroll depth (disabled on mobile)
+    // Track scroll depth (only on desktop)
     if (!isMobile) {
         let maxScrollDepth = 0;
         window.addEventListener('scroll', function() {
@@ -331,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (scrollDepth > maxScrollDepth) {
                 maxScrollDepth = scrollDepth;
                 
-                // Track milestone scroll depths
                 if (maxScrollDepth >= 25 && maxScrollDepth < 50) {
                     trackEvent('scroll_depth', { depth: '25%' });
                 } else if (maxScrollDepth >= 50 && maxScrollDepth < 75) {
@@ -358,6 +353,24 @@ style.textContent = `
     .fade-in.animate-in {
         opacity: 1;
         transform: translateY(0);
+    }
+    
+    /* Ensure elements are visible by default on desktop */
+    @media (min-width: 769px) {
+        .step, .about, section {
+            opacity: 1;
+            transform: none;
+        }
+        
+        .step.fade-in, .about.fade-in, section.fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .step.fade-in.animate-in, .about.fade-in.animate-in, section.fade-in.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .step.fade-in {
