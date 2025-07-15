@@ -86,6 +86,14 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Desktop scroll arrow -->
+        <div class="scroll-arrow desktop-only" id="scrollArrow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 13L12 18L17 13" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M7 6L12 11L17 6" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
     </section>
 
     <!-- About Section -->
@@ -98,6 +106,41 @@
                     </div>
                     <div class="about-content">
                         <p class="about-text primary">Tonely is an ongoing research project exploring how haptic feedback might help people develop pitch recognition. It's part experiment, part tool, and part invitation. We're building in public, join us if you're curious.</p>
+                        
+                        <!-- Watch visual - shows between paragraphs on mobile -->
+                        <div class="watch-visual mobile-inline">
+                            <div class="watch-container">
+                                <div class="watch-body">
+                                    <div class="watch-screen-visual">
+                                        <div class="haptic-pattern">
+                                            <div class="haptic-dot"></div>
+                                            <div class="haptic-dot"></div>
+                                            <div class="haptic-dot"></div>
+                                            <div class="haptic-dot"></div>
+                                            <div class="haptic-dot"></div>
+                                        </div>
+                                    </div>
+                                    <div class="watch-crown-visual"></div>
+                                </div>
+                                <div class="watch-band top"></div>
+                                <div class="watch-band bottom"></div>
+                                
+                                <!-- Haptic Arc SVGs -->
+                                <svg class="haptic-arc-small top-right" viewBox="0 0 50 50">
+                                    <path d="M 25,5 A 20,20 0 0,1 45,25" stroke="#00E8FF" stroke-width="2" fill="none"/>
+                                </svg>
+                                <svg class="haptic-arc-small bottom-left" viewBox="0 0 50 50">
+                                    <path d="M 25,45 A 20,20 0 0,1 5,25" stroke="#00E8FF" stroke-width="2" fill="none"/>
+                                </svg>
+                                <svg class="haptic-arc-large top-right" viewBox="0 0 70 70">
+                                    <path d="M 35,7 A 28,28 0 0,1 63,35" stroke="#00E8FF" stroke-width="1.5" fill="none"/>
+                                </svg>
+                                <svg class="haptic-arc-large bottom-left" viewBox="0 0 70 70">
+                                    <path d="M 35,63 A 28,28 0 0,1 7,35" stroke="#00E8FF" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
                         <p class="about-text secondary">What if you could <em>feel</em> a perfect fifth? What if your wrist could help train your ear? We're exploring these questions one pulse at a time.</p>
                     </div>
                 </div>
@@ -172,7 +215,7 @@
         <div class="container">
             <h2 class="section-title">See Tonely in action</h2>
             <div class="device-showcase">
-                <div class="phone-screenshots">
+                <div class="phone-screenshots" id="phoneCarousel">
                     <div class="phone-mockup">
                         <div class="phone-frame">
                             <div class="phone-status-bar"></div>
@@ -202,6 +245,11 @@
                         </div>
                         <p class="device-caption">Settings</p>
                     </div>
+                </div>
+                <div class="carousel-dots mobile-only">
+                    <span class="dot active" data-slide="0"></span>
+                    <span class="dot" data-slide="1"></span>
+                    <span class="dot" data-slide="2"></span>
                 </div>
                 
                 <div class="watch-screenshot">

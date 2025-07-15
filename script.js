@@ -15,77 +15,37 @@ document.addEventListener('DOMContentLoaded', function() {
     // Detect mobile
     const isMobile = window.innerWidth <= 768;
     
-    // Intersection Observer for fade-in animations (only on desktop)
+    // Desktop-only scroll arrow functionality
     if (!isMobile) {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
+        const scrollArrow = document.getElementById('scrollArrow');
+        if (scrollArrow) {
+            scrollArrow.addEventListener('click', function() {
+                // Smooth scroll to about section
+                const aboutSection = document.querySelector('.about');
+                if (aboutSection) {
+                    aboutSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
+                
+                // Hide the arrow after first click
+                setTimeout(() => {
+                    scrollArrow.style.opacity = '0';
+                    scrollArrow.style.pointerEvents = 'none';
+                }, 500);
             });
-        }, observerOptions);
-
-        // Observe sections for animations
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            section.classList.add('fade-in');
-            observer.observe(section);
+        }
+    }
+    
+    // Skip fade-in animations on desktop to improve scroll performance
+    if (!isMobile) {
+        // Just make everything visible immediately
+        const allElements = document.querySelectorAll('section, .step, .phone-mockup, .watch-mockup, .footer, .section-intro, .about-text-column, .about-visual-column');
+        allElements.forEach(element => {
+            element.style.opacity = '1';
+            element.style.transform = 'none';
         });
-
-        // Add stagger animation to steps
-        const steps = document.querySelectorAll('.step');
-        steps.forEach((step, index) => {
-            step.style.animationDelay = `${index * 0.2}s`;
-            step.classList.add('fade-in');
-            observer.observe(step);
-        });
-        
-        // Animate device mockups
-        const deviceMockups = document.querySelectorAll('.phone-mockup, .watch-mockup');
-        deviceMockups.forEach((mockup, index) => {
-            mockup.style.animationDelay = `${index * 0.3}s`;
-            mockup.classList.add('fade-in');
-            observer.observe(mockup);
-        });
-        
-        // Add fade-in animation to about section elements
-        const aboutSection = document.querySelector('.about');
-        const aboutTitle = document.querySelector('.about .section-title');
-        const aboutTextColumn = document.querySelector('.about-text-column');
-        const aboutVisualColumn = document.querySelector('.about-visual-column');
-        
-        if (aboutSection) {
-            aboutSection.classList.add('fade-in');
-            observer.observe(aboutSection);
-        }
-        
-        if (aboutTitle) {
-            aboutTitle.classList.add('fade-in');
-            observer.observe(aboutTitle);
-        }
-        
-        if (aboutTextColumn) {
-            aboutTextColumn.classList.add('fade-in');
-            observer.observe(aboutTextColumn);
-        }
-        
-        if (aboutVisualColumn) {
-            aboutVisualColumn.style.animationDelay = '0.3s';
-            aboutVisualColumn.classList.add('fade-in');
-            observer.observe(aboutVisualColumn);
-        }
-        
-        // Add fade-in animation to footer
-        const footer = document.querySelector('.footer');
-        if (footer) {
-            footer.classList.add('fade-in');
-            observer.observe(footer);
-        }
     }
     
     // Watch haptic rhythm animation (works on all devices)
@@ -95,6 +55,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const hapticDots = document.querySelectorAll('.haptic-dot');
     let hapticInterval;
     let dotIndex = 0;
+    
+    // Debug: Log if elements are found
+    console.log('Watch elements found:', {
+        watchBody: !!watchBody,
+        watchContainer: !!watchContainer,
+        watchVisual: !!watchVisual,
+        hapticDots: hapticDots.length
+    });
+    
+    // Manual test removed
     
     function triggerHapticFeedback() {
         if (!watchBody || !watchContainer || !watchVisual) return;
@@ -162,26 +132,150 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function handleScroll() {
+        // Try multiple elements to detect when watch should be animated
         const aboutSection = document.querySelector('.about');
+        const watchVisual = document.querySelector('.watch-visual');
+        const aboutVisualColumn = document.querySelector('.about-visual-column');
         
-        if (!aboutSection) return;
+        let targetElement = watchVisual || aboutVisualColumn || aboutSection;
         
-        const rect = aboutSection.getBoundingClientRect();
-        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (!targetElement) {
+            console.log('No target element found for watch animation');
+            return;
+        }
+        
+        const rect = targetElement.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const isInView = rect.top < windowHeight && rect.bottom > 0;
+        
+        // Debug logging
+        console.log('Watch animation check:', {
+            element: targetElement.className,
+            rect: rect,
+            isInView: isInView,
+            hapticInterval: !!hapticInterval
+        });
         
         if (isInView && !hapticInterval) {
+            console.log('Starting haptic rhythm');
             startHapticRhythm();
         } else if (!isInView && hapticInterval) {
+            console.log('Stopping haptic rhythm');
             stopHapticRhythm();
         }
     }
     
+    // Create a watch animation class that can be triggered anywhere
+    class WatchAnimation {
+        constructor() {
+            this.watchBodies = document.querySelectorAll('.watch-body');
+            this.watchContainers = document.querySelectorAll('.watch-container');
+            this.watchVisuals = document.querySelectorAll('.watch-visual');
+            this.hapticDots = document.querySelectorAll('.haptic-dot');
+            this.isRunning = false;
+            this.interval = null;
+            this.dotIndex = 0;
+        }
+        
+        triggerSinglePulse() {
+            if (this.watchBodies.length === 0 || this.watchContainers.length === 0 || this.watchVisuals.length === 0) return;
+            
+            console.log('Triggering watch pulse...');
+            
+            // Vibrate all watch bodies
+            this.watchBodies.forEach(watchBody => {
+                watchBody.classList.remove('vibrating');
+                void watchBody.offsetWidth; // Force reflow
+                watchBody.classList.add('vibrating');
+            });
+            
+            // Add haptic arc effects to all containers
+            this.watchContainers.forEach(watchContainer => {
+                watchContainer.classList.remove('vibrating');
+                void watchContainer.offsetWidth;
+                watchContainer.classList.add('vibrating');
+            });
+            
+            // Add haptic arc effects to all visuals
+            this.watchVisuals.forEach(watchVisual => {
+                watchVisual.classList.remove('vibrating');
+                void watchVisual.offsetWidth;
+                watchVisual.classList.add('vibrating');
+            });
+            
+            // Animate haptic dots
+            if (this.hapticDots.length > 0) {
+                const currentDot = this.hapticDots[this.dotIndex];
+                if (currentDot) {
+                    currentDot.classList.remove('pulsing');
+                    void currentDot.offsetWidth;
+                    currentDot.classList.add('pulsing');
+                    
+                    setTimeout(() => {
+                        currentDot.classList.remove('pulsing');
+                    }, 500);
+                }
+                this.dotIndex = (this.dotIndex + 1) % this.hapticDots.length;
+            }
+            
+            // Clean up classes
+            setTimeout(() => {
+                this.watchBodies.forEach(watchBody => {
+                    watchBody.classList.remove('vibrating');
+                });
+                this.watchContainers.forEach(watchContainer => {
+                    watchContainer.classList.remove('vibrating');
+                });
+                this.watchVisuals.forEach(watchVisual => {
+                    watchVisual.classList.remove('vibrating');
+                });
+            }, 600);
+        }
+        
+        start() {
+            if (this.isRunning) return;
+            console.log('Starting continuous watch animation...');
+            this.isRunning = true;
+            this.triggerSinglePulse();
+            this.interval = setInterval(() => {
+                this.triggerSinglePulse();
+            }, 2800);
+        }
+        
+        stop() {
+            if (!this.isRunning) return;
+            console.log('Stopping watch animation...');
+            this.isRunning = false;
+            if (this.interval) {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+            this.dotIndex = 0;
+        }
+    }
+    
+    // Create global watch animation instance
+    window.watchAnimation = new WatchAnimation();
+    
     // Add scroll listener for haptic feedback (works on all devices unless reduced motion)
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        window.addEventListener('scroll', handleScroll);
-        
-        // Initial check
-        handleScroll();
+        // Simple intersection observer for the about section
+        const aboutSection = document.querySelector('.about');
+        if (aboutSection) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        window.watchAnimation.start();
+                    } else {
+                        window.watchAnimation.stop();
+                    }
+                });
+            }, {
+                threshold: 0.3 // Trigger when 30% of the section is visible
+            });
+            
+            observer.observe(aboutSection);
+        }
     }
 
     // TestFlight button interaction
@@ -319,25 +413,98 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Track scroll depth (only on desktop)
-    if (!isMobile) {
-        let maxScrollDepth = 0;
-        window.addEventListener('scroll', function() {
-            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-            if (scrollDepth > maxScrollDepth) {
-                maxScrollDepth = scrollDepth;
-                
-                if (maxScrollDepth >= 25 && maxScrollDepth < 50) {
-                    trackEvent('scroll_depth', { depth: '25%' });
-                } else if (maxScrollDepth >= 50 && maxScrollDepth < 75) {
-                    trackEvent('scroll_depth', { depth: '50%' });
-                } else if (maxScrollDepth >= 75 && maxScrollDepth < 100) {
-                    trackEvent('scroll_depth', { depth: '75%' });
-                } else if (maxScrollDepth >= 100) {
-                    trackEvent('scroll_depth', { depth: '100%' });
-                }
+    
+    // Phone carousel functionality (mobile only)
+    if (isMobile) {
+        const carousel = document.getElementById('phoneCarousel');
+        const dots = document.querySelectorAll('.dot');
+        const phones = document.querySelectorAll('.phone-mockup');
+        
+        if (carousel && dots.length > 0) {
+            let currentSlide = 0;
+            
+            // Function to update active dot and phone
+            function updateActiveStates() {
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+                phones.forEach((phone, index) => {
+                    phone.classList.toggle('active', index === currentSlide);
+                });
             }
-        });
+            
+            // Function to scroll to specific slide
+            function scrollToSlide(slideIndex) {
+                const phoneWidth = 220; // phone width + margins (200 + 20)
+                carousel.scrollTo({
+                    left: slideIndex * phoneWidth,
+                    behavior: 'smooth'
+                });
+                currentSlide = slideIndex;
+                updateActiveStates();
+            }
+            
+            // Initialize first phone as active
+            updateActiveStates();
+            
+            // Dot click handlers
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    scrollToSlide(index);
+                });
+            });
+            
+            // Scroll detection to update dots
+            let scrollTimeout;
+            carousel.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const phoneWidth = 220;
+                    const scrollLeft = carousel.scrollLeft;
+                    const newSlide = Math.round(scrollLeft / phoneWidth);
+                    
+                    if (newSlide !== currentSlide && newSlide >= 0 && newSlide < dots.length) {
+                        currentSlide = newSlide;
+                        updateActiveStates();
+                    }
+                }, 100);
+            });
+            
+            // Touch/swipe support
+            let startX, startY, distX, distY;
+            let isScrolling;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                isScrolling = undefined;
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 1) return;
+                
+                distX = e.touches[0].clientX - startX;
+                distY = e.touches[0].clientY - startY;
+                
+                if (typeof isScrolling === 'undefined') {
+                    isScrolling = Math.abs(distY) > Math.abs(distX);
+                }
+                
+                if (!isScrolling) {
+                    e.preventDefault();
+                }
+            });
+            
+            carousel.addEventListener('touchend', () => {
+                if (!isScrolling && Math.abs(distX) > 50) {
+                    if (distX > 0 && currentSlide > 0) {
+                        scrollToSlide(currentSlide - 1);
+                    } else if (distX < 0 && currentSlide < dots.length - 1) {
+                        scrollToSlide(currentSlide + 1);
+                    }
+                }
+            });
+        }
     }
 });
 
