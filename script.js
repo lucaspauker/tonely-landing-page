@@ -323,25 +323,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Track scroll depth
-    let maxScrollDepth = 0;
-    window.addEventListener('scroll', function() {
-        const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-        if (scrollDepth > maxScrollDepth) {
-            maxScrollDepth = scrollDepth;
-            
-            // Track milestone scroll depths
-            if (maxScrollDepth >= 25 && maxScrollDepth < 50) {
-                trackEvent('scroll_depth', { depth: '25%' });
-            } else if (maxScrollDepth >= 50 && maxScrollDepth < 75) {
-                trackEvent('scroll_depth', { depth: '50%' });
-            } else if (maxScrollDepth >= 75 && maxScrollDepth < 100) {
-                trackEvent('scroll_depth', { depth: '75%' });
-            } else if (maxScrollDepth >= 100) {
-                trackEvent('scroll_depth', { depth: '100%' });
+    // Track scroll depth (disabled on mobile)
+    if (!isMobile) {
+        let maxScrollDepth = 0;
+        window.addEventListener('scroll', function() {
+            const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            if (scrollDepth > maxScrollDepth) {
+                maxScrollDepth = scrollDepth;
+                
+                // Track milestone scroll depths
+                if (maxScrollDepth >= 25 && maxScrollDepth < 50) {
+                    trackEvent('scroll_depth', { depth: '25%' });
+                } else if (maxScrollDepth >= 50 && maxScrollDepth < 75) {
+                    trackEvent('scroll_depth', { depth: '50%' });
+                } else if (maxScrollDepth >= 75 && maxScrollDepth < 100) {
+                    trackEvent('scroll_depth', { depth: '75%' });
+                } else if (maxScrollDepth >= 100) {
+                    trackEvent('scroll_depth', { depth: '100%' });
+                }
             }
-        }
-    });
+        });
+    }
 });
 
 // Add CSS for animation classes
