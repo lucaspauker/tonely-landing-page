@@ -15,69 +15,63 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Intersection Observer for fade-in animations (disabled on mobile)
-    const isMobile = window.innerWidth <= 768;
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observe sections for animations
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        section.classList.add('fade-in');
+        observer.observe(section);
+    });
+
+    // Add stagger animation to steps and device mockups
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, index) => {
+        step.style.animationDelay = `${index * 0.2}s`;
+        step.classList.add('fade-in');
+        observer.observe(step);
+    });
     
-    if (!isMobile) {
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, observerOptions);
-
-        // Observe sections for animations
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            section.classList.add('fade-in');
-            observer.observe(section);
-        });
+    // Animate device mockups
+    const deviceMockups = document.querySelectorAll('.phone-mockup, .watch-mockup');
+    deviceMockups.forEach((mockup, index) => {
+        mockup.style.animationDelay = `${index * 0.3}s`;
+        mockup.classList.add('fade-in');
+        observer.observe(mockup);
+    });
+    
+    // Add fade-in animation to about section elements
+    const aboutTextColumn = document.querySelector('.about-text-column');
+    const aboutVisualColumn = document.querySelector('.about-visual-column');
+    
+    if (aboutTextColumn) {
+        aboutTextColumn.classList.add('fade-in');
+        observer.observe(aboutTextColumn);
     }
-
-    // Add stagger animation to steps and device mockups (only on desktop)
-    if (!isMobile) {
-        const steps = document.querySelectorAll('.step');
-        steps.forEach((step, index) => {
-            step.style.animationDelay = `${index * 0.2}s`;
-            step.classList.add('fade-in');
-            observer.observe(step);
-        });
-        
-        // Animate device mockups
-        const deviceMockups = document.querySelectorAll('.phone-mockup, .watch-mockup');
-        deviceMockups.forEach((mockup, index) => {
-            mockup.style.animationDelay = `${index * 0.3}s`;
-            mockup.classList.add('fade-in');
-            observer.observe(mockup);
-        });
-        
-        // Add fade-in animation to about section elements
-        const aboutTextColumn = document.querySelector('.about-text-column');
-        const aboutVisualColumn = document.querySelector('.about-visual-column');
-        
-        if (aboutTextColumn) {
-            aboutTextColumn.classList.add('fade-in');
-            observer.observe(aboutTextColumn);
-        }
-        
-        if (aboutVisualColumn) {
-            aboutVisualColumn.style.animationDelay = '0.3s';
-            aboutVisualColumn.classList.add('fade-in');
-            observer.observe(aboutVisualColumn);
-        }
-        
-        // Add fade-in animation to footer bar
-        const footer = document.querySelector('.footer');
-        if (footer) {
-            footer.classList.add('fade-in');
-            observer.observe(footer);
-        }
+    
+    if (aboutVisualColumn) {
+        aboutVisualColumn.style.animationDelay = '0.3s';
+        aboutVisualColumn.classList.add('fade-in');
+        observer.observe(aboutVisualColumn);
+    }
+    
+    // Add fade-in animation to footer bar
+    const footer = document.querySelector('.footer');
+    if (footer) {
+        footer.classList.add('fade-in');
+        observer.observe(footer);
     }
     
     // Watch haptic rhythm animation
@@ -382,20 +376,6 @@ style.textContent = `
         .watch-container.vibrating .haptic-arc-small,
         .watch-container.vibrating .haptic-arc-large {
             animation: none;
-        }
-    }
-
-    /* Disable fade animations on mobile devices */
-    @media (max-width: 768px) {
-        .fade-in {
-            opacity: 1;
-            transform: none;
-            transition: none;
-        }
-        
-        .fade-in.animate-in {
-            opacity: 1;
-            transform: none;
         }
     }
 `;
