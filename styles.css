@@ -15,6 +15,7 @@ html {
     background: #090712;
     overflow-x: hidden;
     height: 100%;
+    scroll-behavior: smooth;
 }
 
 /* Performance optimizations for smoother scrolling */
@@ -43,6 +44,17 @@ html {
         visibility: visible !important;
         z-index: 9999 !important;
         position: absolute !important;
+    }
+    
+    /* Move hero blob up significantly */
+    .hero::before {
+        top: 20% !important;
+    }
+    
+    /* Ensure watch bands are visible on desktop */
+    .watch-band {
+        display: block !important;
+        opacity: 1 !important;
     }
     
     /* Hero section takes full viewport */

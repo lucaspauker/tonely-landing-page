@@ -38,14 +38,83 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Skip fade-in animations on desktop to improve scroll performance
+    // Intersection Observer for fade-in animations (only on desktop)
     if (!isMobile) {
-        // Just make everything visible immediately
-        const allElements = document.querySelectorAll('section, .step, .phone-mockup, .watch-mockup, .footer, .section-intro, .about-text-column, .about-visual-column');
-        allElements.forEach(element => {
-            element.style.opacity = '1';
-            element.style.transform = 'none';
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for animations
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            section.classList.add('fade-in');
+            observer.observe(section);
         });
+
+        // Add stagger animation to steps
+        const steps = document.querySelectorAll('.step');
+        steps.forEach((step, index) => {
+            step.style.animationDelay = `${index * 0.2}s`;
+            step.classList.add('fade-in');
+            observer.observe(step);
+        });
+        
+        // Animate device mockups
+        const deviceMockups = document.querySelectorAll('.phone-mockup, .watch-mockup');
+        deviceMockups.forEach((mockup, index) => {
+            mockup.style.animationDelay = `${index * 0.3}s`;
+            mockup.classList.add('fade-in');
+            observer.observe(mockup);
+        });
+        
+        // Add fade-in animation to about section elements
+        const aboutSection = document.querySelector('.about');
+        const sectionIntro = document.querySelector('.section-intro');
+        const aboutTitle = document.querySelector('.section-intro .section-title');
+        const aboutTextColumn = document.querySelector('.about-text-column');
+        const aboutVisualColumn = document.querySelector('.about-visual-column');
+        
+        if (aboutSection) {
+            aboutSection.classList.add('fade-in');
+            observer.observe(aboutSection);
+        }
+        
+        if (sectionIntro) {
+            sectionIntro.classList.add('fade-in');
+            observer.observe(sectionIntro);
+        }
+        
+        if (aboutTitle) {
+            aboutTitle.classList.add('fade-in');
+            observer.observe(aboutTitle);
+        }
+        
+        if (aboutTextColumn) {
+            aboutTextColumn.classList.add('fade-in');
+            observer.observe(aboutTextColumn);
+        }
+        
+        if (aboutVisualColumn) {
+            aboutVisualColumn.style.animationDelay = '0.3s';
+            aboutVisualColumn.classList.add('fade-in');
+            observer.observe(aboutVisualColumn);
+        }
+        
+        // Add fade-in animation to footer
+        const footer = document.querySelector('.footer');
+        if (footer) {
+            footer.classList.add('fade-in');
+            observer.observe(footer);
+        }
     }
     
     // Watch haptic rhythm animation (works on all devices)
@@ -513,30 +582,25 @@ const style = document.createElement('style');
 style.textContent = `
     .fade-in {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.6s ease, transform 0.6s ease;
+        transition: opacity 0.6s ease;
     }
 
     .fade-in.animate-in {
         opacity: 1;
-        transform: translateY(0);
     }
     
     /* Ensure elements are visible by default on desktop */
     @media (min-width: 769px) {
         .step, .about, section {
             opacity: 1;
-            transform: none;
         }
         
         .step.fade-in, .about.fade-in, section.fade-in {
             opacity: 0;
-            transform: translateY(30px);
         }
         
         .step.fade-in.animate-in, .about.fade-in.animate-in, section.fade-in.animate-in {
             opacity: 1;
-            transform: translateY(0);
         }
     }
 
