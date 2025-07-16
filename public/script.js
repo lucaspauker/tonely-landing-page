@@ -117,128 +117,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Watch haptic rhythm animation (works on all devices)
-    const watchBody = document.querySelector('.watch-body');
-    const watchContainer = document.querySelector('.watch-container');
-    const watchVisual = document.querySelector('.watch-visual');
-    const hapticDots = document.querySelectorAll('.haptic-dot');
-    let hapticInterval;
-    let dotIndex = 0;
-
-    // Debug: Log if elements are found
-    console.log('Watch elements found:', {
-        watchBody: !!watchBody,
-        watchContainer: !!watchContainer,
-        watchVisual: !!watchVisual,
-        hapticDots: hapticDots.length
-    });
-
-    // Manual test removed
-
-    function triggerHapticFeedback() {
-        if (!watchBody || !watchContainer || !watchVisual) return;
-
-        // Vibrate the watch body
-        watchBody.classList.remove('vibrating');
-        void watchBody.offsetWidth; // Force reflow
-        watchBody.classList.add('vibrating');
-
-        // Add haptic arc effects to container
-        watchContainer.classList.remove('vibrating');
-        void watchContainer.offsetWidth; // Force reflow
-        watchContainer.classList.add('vibrating');
-
-        // Add haptic arc effects to visual
-        watchVisual.classList.remove('vibrating');
-        void watchVisual.offsetWidth; // Force reflow
-        watchVisual.classList.add('vibrating');
-
-        // Animate haptic dots in sequence
-        if (hapticDots.length > 0) {
-            const currentDot = hapticDots[dotIndex];
-            if (currentDot) {
-                currentDot.classList.remove('pulsing');
-                void currentDot.offsetWidth; // Force reflow
-                currentDot.classList.add('pulsing');
-            }
-
-            // Move to next dot in sequence
-            dotIndex = (dotIndex + 1) % 5;
-        }
-
-        // Remove vibrating classes after animations
-        setTimeout(() => {
-            watchBody.classList.remove('vibrating');
-            watchContainer.classList.remove('vibrating');
-            watchVisual.classList.remove('vibrating');
-        }, 600);
-    }
-
-    function startHapticRhythm() {
-        if (hapticInterval) return; // Already running
-
-        // Start with immediate feedback
-        triggerHapticFeedback();
-
-        // Then continue with rhythm
-        hapticInterval = setInterval(() => {
-            triggerHapticFeedback();
-        }, 2800);
-    }
-
-    function stopHapticRhythm() {
-        if (hapticInterval) {
-            clearInterval(hapticInterval);
-            hapticInterval = null;
-        }
-        // Reset dot index
-        dotIndex = 0;
-    }
-
-    function handleScroll() {
-        // Try multiple elements to detect when watch should be animated
-        const aboutSection = document.querySelector('.about');
-        const watchVisual = document.querySelector('.watch-visual');
-        const aboutVisualColumn = document.querySelector('.about-visual-column');
-
-        let targetElement = watchVisual || aboutVisualColumn || aboutSection;
-
-        if (!targetElement) {
-            console.log('No target element found for watch animation');
-            return;
-        }
-
-        const rect = targetElement.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const isInView = rect.top < windowHeight && rect.bottom > 0;
-
-        // Debug logging
-        console.log('Watch animation check:', {
-            element: targetElement.className,
-            rect: rect,
-            isInView: isInView,
-            hapticInterval: !!hapticInterval
-        });
-
-        if (isInView && !hapticInterval) {
-            console.log('Starting haptic rhythm');
-            startHapticRhythm();
-        } else if (!isInView && hapticInterval) {
-            console.log('Stopping haptic rhythm');
-            stopHapticRhythm();
-        }
-    }
 
     // Create a watch animation class that can be triggered anywhere
     class WatchAnimation {
         constructor() {
-            this.watchBodies = document.querySelectorAll('.watch-body');
-            this.watchContainers = document.querySelectorAll('.watch-container');
-            this.watchVisuals = document.querySelectorAll('.watch-visual');
-            this.hapticDots = document.querySelectorAll('.haptic-dot');
+            // On desktop, only target the visible watch (not mobile-inline)
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // On mobile, target mobile-inline watch
+                this.watchBodies = document.querySelectorAll('.watch-visual.mobile-inline .watch-body');
+                this.watchContainers = document.querySelectorAll('.watch-visual.mobile-inline .watch-container');
+                this.watchVisuals = document.querySelectorAll('.watch-visual.mobile-inline');
+                this.hapticDots = document.querySelectorAll('.watch-visual.mobile-inline .haptic-dot');
+            } else {
+                // On desktop, target the about-visual-column watch (not mobile-inline)
+                this.watchBodies = document.querySelectorAll('.about-visual-column .watch-body');
+                this.watchContainers = document.querySelectorAll('.about-visual-column .watch-container');
+                this.watchVisuals = document.querySelectorAll('.about-visual-column .watch-visual');
+                this.hapticDots = document.querySelectorAll('.about-visual-column .haptic-dot');
+            }
+            
             this.isRunning = false;
             this.interval = null;
             this.dotIndex = 0;
+            
+            // Debug logging
+            console.log('WatchAnimation initialized:', {
+                isMobile: isMobile,
+                watchBodies: this.watchBodies.length,
+                watchContainers: this.watchContainers.length,
+                watchVisuals: this.watchVisuals.length,
+                hapticDots: this.hapticDots.length,
+                selector: isMobile ? '.mobile-inline' : '.about-visual-column'
+            });
         }
 
         triggerSinglePulse() {
@@ -483,14 +395,90 @@ document.addEventListener('DOMContentLoaded', function() {
         if (carousel && dots.length > 0) {
             let currentSlide = 1;
 
-            // Function to update active dot and phone
+            // Function to update active dot and phone with smooth scaling
             function updateActiveStates() {
                 dots.forEach((dot, index) => {
                     dot.classList.toggle('active', index === currentSlide);
                 });
+                
                 phones.forEach((phone, index) => {
-                    phone.classList.toggle('active', index === currentSlide);
+                    const isActive = index === currentSlide;
+                    phone.classList.toggle('active', isActive);
+                    
+                    // Calculate target scale and opacity based on distance from active
+                    const distance = Math.abs(index - currentSlide);
+                    let targetScale, targetOpacity;
+                    
+                    if (distance === 0) {
+                        targetScale = 1;
+                        targetOpacity = 1;
+                    } else if (distance === 1) {
+                        targetScale = 0.85;
+                        targetOpacity = 0.7;
+                    } else {
+                        targetScale = 0.7;
+                        targetOpacity = 0.5;
+                    }
+                    
+                    // Animate to target scale and opacity
+                    animatePhone(phone, targetScale, targetOpacity);
+                    
+                    // Show/hide device caption for active phone
+                    const caption = phone.querySelector('.device-caption');
+                    if (caption) {
+                        caption.style.opacity = isActive ? '1' : '0';
+                    }
                 });
+            }
+            
+            // Smooth animation function for phones
+            function animatePhone(phone, targetScale, targetOpacity) {
+                const duration = 500; // 0.5 seconds
+                const startTime = performance.now();
+                
+                // Get current values - handle special case for second phone
+                const isSecondPhone = phone === phones[1];
+                let currentScale;
+                
+                if (isSecondPhone) {
+                    // For second phone, get scale from CSS variable
+                    const cssScale = getComputedStyle(phone).getPropertyValue('--phone-scale');
+                    currentScale = parseFloat(cssScale || 0.9);
+                } else {
+                    // For other phones, get scale from transform
+                    const currentTransform = phone.style.transform;
+                    currentScale = currentTransform ? parseFloat(currentTransform.match(/scale\(([^)]+)\)/)?.[1] || 1) : 1;
+                }
+                
+                const currentOpacity = parseFloat(phone.style.opacity || 1);
+                
+                function animate(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Easing function (ease-out)
+                    const easeOut = 1 - Math.pow(1 - progress, 3);
+                    
+                    // Interpolate values
+                    const scale = currentScale + (targetScale - currentScale) * easeOut;
+                    const opacity = currentOpacity + (targetOpacity - currentOpacity) * easeOut;
+                    
+                    // Apply values - handle special case for second phone (nth-child(2))
+                    const isSecondPhone = phone === phones[1]; // Index 1 = second phone
+                    if (isSecondPhone) {
+                        phone.style.setProperty('--phone-scale', scale);
+                    } else {
+                        phone.style.transform = `scale(${scale})`;
+                    }
+                    phone.style.opacity = opacity;
+                    
+                    // Continue animation if not complete
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                }
+                
+                requestAnimationFrame(animate);
             }
 
             // Function to scroll to specific slide
@@ -512,6 +500,16 @@ document.addEventListener('DOMContentLoaded', function() {
             dots.forEach((dot, index) => {
                 dot.addEventListener('click', () => {
                     scrollToSlide(index);
+                });
+            });
+
+            // Phone click handlers - tap on phone to scroll to it
+            phones.forEach((phone, index) => {
+                phone.addEventListener('click', () => {
+                    console.log('Phone clicked:', index, 'current:', currentSlide);
+                    scrollToSlide(index);
+                    // Force update even if same slide
+                    updateActiveStates();
                 });
             });
 
