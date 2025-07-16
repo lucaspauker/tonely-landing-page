@@ -16,6 +16,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 let db;
 let emailCollection;
 
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
 async function connectToMongoDB() {
     try {
         const client = new MongoClient(process.env.MONGODB_URI);
