@@ -988,12 +988,12 @@ section {
         display: flex;
         flex-direction: row;
         padding: 1rem 0;
-        width: 100%;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         justify-content: flex-start;
-        margin: 0;
         scrollbar-width: none;
         -ms-overflow-style: none;
         min-height: auto;
@@ -1029,11 +1029,11 @@ section {
     }
 
     .phone-mockup:first-child {
-        margin-left: 40px;
+        margin-left: calc(50vw - 100px);
     }
 
     .phone-mockup:last-child {
-        margin-right: 40px;
+        margin-right: calc(50vw - 100px);
     }
 
     .phone-frame {
