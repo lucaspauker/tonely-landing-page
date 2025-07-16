@@ -160,15 +160,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 currentDot.classList.remove('pulsing');
                 void currentDot.offsetWidth; // Force reflow
                 currentDot.classList.add('pulsing');
-
-                // Remove the pulsing class after animation completes
-                setTimeout(() => {
-                    currentDot.classList.remove('pulsing');
-                }, 500);
             }
 
             // Move to next dot in sequence
-            dotIndex = (dotIndex + 1) % hapticDots.length;
+            dotIndex = (dotIndex + 1) % 5;
         }
 
         // Remove vibrating classes after animations
@@ -279,12 +274,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     currentDot.classList.remove('pulsing');
                     void currentDot.offsetWidth;
                     currentDot.classList.add('pulsing');
-
-                    setTimeout(() => {
-                        currentDot.classList.remove('pulsing');
-                    }, 500);
                 }
-                this.dotIndex = (this.dotIndex + 1) % this.hapticDots.length;
+                this.dotIndex = (this.dotIndex + 1) % 5;
             }
 
             // Clean up classes
