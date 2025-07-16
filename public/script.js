@@ -483,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Function to scroll to specific slide
             function scrollToSlide(slideIndex) {
-                const phoneWidth = 200;
+                const phoneWidth = 198;
                 carousel.scrollTo({
                     left: slideIndex * phoneWidth,
                     behavior: 'smooth'
