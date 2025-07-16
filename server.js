@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
+app.get('/privacy', (req, res) => {
+    res.sendFile(path.join(__dirname, 'privacy.html'));
+});
+
 // Email signup endpoint
 app.post('/api/signup', async (req, res) => {
     try {

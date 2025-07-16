@@ -427,6 +427,7 @@ section {
     position: relative;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     border: 3px solid #444;
+    z-index: 1;
 }
 
 .watch-screen-visual {
@@ -461,7 +462,7 @@ section {
     height: 20px;
     background: #333;
     border-radius: 10px;
-    z-index: -1;
+    z-index: 0;
 }
 
 .watch-band.top {
@@ -720,13 +721,13 @@ section {
 }
 
 .phone-mockup:nth-child(2) {
-    z-index: 3;
+    z-index: 2;
     transform: translateY(-40px) !important;
 }
 
 
 .phone-mockup:nth-child(3) {
-    z-index: 2;
+    z-index: 3;
 }
 
 .phone-mockup {
@@ -889,9 +890,6 @@ section {
 .watch-mockup {
     cursor: pointer;
     transition: all 0.3s ease;
-}
-
-.watch-mockup:hover {
     z-index: 10;
 }
 
