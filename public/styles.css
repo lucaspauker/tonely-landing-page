@@ -947,7 +947,7 @@ section {
     display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
 
     .watch-screenshot {
         margin-left: 0;
@@ -999,10 +999,39 @@ section {
     }
 
     /* Disable carousel scrolling on desktop */
-    @media (min-width: 769px) {
+    @media (min-width: 1025px) {
         .phone-screenshots {
             overflow-x: visible;
             scroll-snap-type: none;
+            flex-direction: row;
+            gap: -3rem;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 2rem;
+            min-height: 600px;
+            width: auto;
+        }
+        
+        .phone-mockup {
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 0 -2rem;
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .phone-mockup:nth-child(2) {
+            transform: translateY(-40px) !important;
+            z-index: 2;
+        }
+        
+        .phone-mockup:hover {
+            z-index: 10 !important;
+        }
+        
+        .phone-mockup:hover .phone-frame {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 8px 40px rgba(255, 255, 255, 0.4) !important;
         }
     }
 
@@ -1027,6 +1056,7 @@ section {
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 8px 40px rgba(255, 255, 255, 0.2) !important;
     }
 
+    /* Mobile phone margins */
     .phone-mockup:first-child {
         margin-left: calc(50vw - 99px);
     }
@@ -1546,6 +1576,17 @@ section {
     /* Move musical notes higher up by 10% on mobile */
     .musical-background {
         bottom: -30%;
+    }
+}
+
+/* iPad specific overrides */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .phone-mockup:first-child {
+        margin-left: calc(50vw - 99px);
+    }
+
+    .phone-mockup:last-child {
+        margin-right: calc(50vw - 99px);
     }
 }
 

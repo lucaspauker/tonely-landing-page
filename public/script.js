@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Force scroll to top
     window.scrollTo(0, 0);
 
-    // Detect mobile
-    const isMobile = window.innerWidth <= 768;
+    // Detect mobile/tablet (iPad and smaller)
+    const isMobile = window.innerWidth <= 1024;
 
     // Desktop-only scroll arrow functionality
     if (!isMobile) {
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
     class WatchAnimation {
         constructor() {
             // On desktop, only target the visible watch (not mobile-inline)
-            const isMobile = window.innerWidth <= 768;
+            const isMobile = window.innerWidth <= 1024;
             
             if (isMobile) {
                 // On mobile, target mobile-inline watch
@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const phones = document.querySelectorAll('.phone-mockup');
 
         if (carousel && dots.length > 0) {
-            let currentSlide = 1;
+            let currentSlide = 0;
 
             // Function to update active dot and phone with smooth scaling
             function updateActiveStates() {
@@ -494,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Initialize first phone as active
             updateActiveStates();
-            scrollToSlide(1);
+            scrollToSlide(0);
 
             // Dot click handlers
             dots.forEach((dot, index) => {
