@@ -250,11 +250,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // TestFlight button interaction
-    const testflightBtn = document.getElementById('testflightBtn');
-    if (testflightBtn) {
-        testflightBtn.addEventListener('click', function() {
-            const testflightUrl = 'https://testflight.apple.com/join/b38c4w2Q';
+    // App Store button interaction
+    const appStoreBtn = document.getElementById('appStoreBtn');
+    if (appStoreBtn) {
+        appStoreBtn.addEventListener('click', function() {
+            const appStoreUrl = 'https://apps.apple.com/us/app/tonely/id6748625786';
 
             // Add click animation
             this.style.transform = 'scale(0.95)';
@@ -262,18 +262,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.style.transform = '';
             }, 150);
 
-            // Open TestFlight link
-            window.open(testflightUrl, '_blank');
+            // Open App Store link
+            window.open(appStoreUrl, '_blank');
         });
 
         // Add hover effect enhancement
-        testflightBtn.addEventListener('mouseenter', function() {
+        appStoreBtn.addEventListener('mouseenter', function() {
             if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                 this.style.transform = 'translateY(-2px) scale(1.02)';
             }
         });
 
-        testflightBtn.addEventListener('mouseleave', function() {
+        appStoreBtn.addEventListener('mouseleave', function() {
             this.style.transform = '';
         });
     }
@@ -376,10 +376,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Track CTA clicks
-    if (testflightBtn) {
-        testflightBtn.addEventListener('click', function() {
+    if (appStoreBtn) {
+        appStoreBtn.addEventListener('click', function() {
             trackEvent('cta_click', {
-                button: 'testflight_beta',
+                button: 'app_store',
                 location: 'main_cta'
             });
         });
